@@ -1,0 +1,9 @@
+This project provides the basic setup required to use PC game clients
+like Steam or GOG Galaxy with Adventure Game Studio, but is intended
+as an interface only and is not complete or functional by itself. The
+purpose of this project is to allow easy replacement of any
+proprietary or closed-source client plugins (e.g., AGSteam) as well
+as creating a common interface for developers.
+
+Please contact monkey_05_06 at the AGS Forums or at
+monkey0506@gmail.com with any feedback or questions.
