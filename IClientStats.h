@@ -44,13 +44,13 @@ namespace AGS2Client
         virtual ~IClientStats() = 0;
     }; // class IClientStats
 
-    IClientStats* GetClientStats();
-    int ClientStats_GetIntStat(char const *name);
-    float ClientStats_GetFloatStat(char const *name);
-    float ClientStats_GetAverageRateStat(char const *name);
-    int ClientStats_SetIntStat(char const *name, int value);
-    int ClientStats_SetFloatStat(char const *name, float value);
-    int ClientStats_UpdateAverageRateStat(char const *name, float countThisSession, float sessionLength);
+    IClientStats* GetClientStats() noexcept;
+    int ClientStats_GetIntStat(char const *name) noexcept;
+    float ClientStats_GetFloatStat(char const *name) noexcept;
+    float ClientStats_GetAverageRateStat(char const *name) noexcept;
+    int ClientStats_SetIntStat(char const *name, int value) noexcept;
+    int ClientStats_SetFloatStat(char const *name, float value) noexcept;
+    int ClientStats_UpdateAverageRateStat(char const *name, float countThisSession, float sessionLength) noexcept;
 } // namespace AGS2Client
 
 #endif // AGS2CLIENT_ICLIENTSTATS_H

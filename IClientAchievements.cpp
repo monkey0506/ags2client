@@ -24,22 +24,22 @@
 
 namespace AGS2Client
 {
-    int ClientAchievements_ResetAchievement(char const *name)
+    int ClientAchievements_ResetAchievement(char const *name) noexcept
     {
         return (GetClientAchievements() == nullptr ? 0 : GetClientAchievements()->ResetAchievement(name));
     }
 
-    int ClientAchievements_SetAchievementAchieved(char const *name)
+    int ClientAchievements_SetAchievementAchieved(char const *name) noexcept
     {
         return (GetClientAchievements() == nullptr ? 0 : GetClientAchievements()->SetAchievementAchieved(name));
     }
 
-    int ClientAchievements_IsAchievementAchieved(char const *name)
+    int ClientAchievements_IsAchievementAchieved(char const *name) noexcept
     {
         return (GetClientAchievements() == nullptr ? 0 : GetClientAchievements()->IsAchievementAchieved(name));
     }
 
-    IClientAchievements::~IClientAchievements()
+    IClientAchievements::~IClientAchievements() noexcept
     {
     }
 } // namespace AGS2Client

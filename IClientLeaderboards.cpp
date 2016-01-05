@@ -27,41 +27,41 @@ extern IAGSEngine *engine;
 
 namespace AGS2Client
 {
-    char const* ClientLeaderboards_GetCurrentLeaderboardName()
+    char const* ClientLeaderboards_GetCurrentLeaderboardName() noexcept
     {
         if (GetClientLeaderboards() == nullptr) return nullptr;
         char const *leaderboardName = GetClientLeaderboards()->GetCurrentLeaderboardName();
         return (leaderboardName == nullptr ? nullptr : engine->CreateScriptString(leaderboardName));
     }
 
-    void ClientLeaderboards_RequestLeaderboard(char const *leaderboardName, int type, int limit)
+    void ClientLeaderboards_RequestLeaderboard(char const *leaderboardName, int type, int limit) noexcept
     {
         if (GetClientLeaderboards() != nullptr) GetClientLeaderboards()->RequestLeaderboard(leaderboardName, static_cast<LeaderboardScoreType>(type), limit);
     }
 
-    int ClientLeaderboards_UploadScore(int score)
+    int ClientLeaderboards_UploadScore(int score) noexcept
     {
         return (GetClientLeaderboards() == nullptr ? 0 : GetClientLeaderboards()->UploadScore(score));
     }
 
-    char const* ClientLeaderboards_GetLeaderName(int index)
+    char const* ClientLeaderboards_GetLeaderName(int index) noexcept
     {
         if (GetClientLeaderboards() == nullptr) return nullptr;
         char const *leaderName = GetClientLeaderboards()->GetLeaderName(index);
         return (leaderName == nullptr ? nullptr : engine->CreateScriptString(leaderName));
     }
 
-    int ClientLeaderboards_GetLeaderScore(int index)
+    int ClientLeaderboards_GetLeaderScore(int index) noexcept
     {
         return (GetClientLeaderboards() == nullptr ? 0 : GetClientLeaderboards()->GetLeaderScore(index));
     }
 
-    int ClientLeaderboards_GetLeaderCount()
+    int ClientLeaderboards_GetLeaderCount() noexcept
     {
         return (GetClientLeaderboards() == nullptr ? 0 : GetClientLeaderboards()->GetLeaderCount());
     }
 
-    IClientLeaderboards::~IClientLeaderboards()
+    IClientLeaderboards::~IClientLeaderboards() noexcept
     {
     }
 } // namespace AGS2Client

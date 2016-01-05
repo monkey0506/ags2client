@@ -41,7 +41,7 @@
 
 namespace AGS2Client
 {
-    char const* IAGS2Client::GetClientNameForScript() const
+    char const* IAGS2Client::GetClientNameForScript() const noexcept
     {
         static std::string clientName;
         if (clientName.empty())
@@ -57,7 +57,7 @@ namespace AGS2Client
         return clientName.c_str();
     }
 
-    char const* IAGS2Client::GetAGSScriptHeader() const
+    char const* IAGS2Client::GetAGSScriptHeader() const noexcept
     {
         static std::string generatedHeader;
         if (generatedHeader.empty())
@@ -128,12 +128,12 @@ namespace AGS2Client
         return generatedHeader.c_str();
     }
 
-    char const* IAGS2Client::GetExtraFunctionsForScriptHeader() const
+    char const* IAGS2Client::GetExtraFunctionsForScriptHeader() const noexcept
     {
         return "";
     }
 
-    void IAGS2Client::RegisterScriptFunctions(IAGSEngine *engine) const
+    void IAGS2Client::RegisterScriptFunctions(IAGSEngine *engine) const noexcept
     {
         static std::unordered_map<std::string, void*> functions; // RegisterScriptFunction does not copy the buffer, we must persist it ourselves
         std::string clientName{ this->GetClientNameForScript() };
@@ -161,22 +161,22 @@ namespace AGS2Client
         }
     }
 
-    int AGS2Client_IsInitialized()
+    int AGS2Client_IsInitialized() noexcept
     {
         return (GetClient()->IsInitialized() != 0);
     }
 
-    void AGS2Client_ResetStatsAndAchievements()
+    void AGS2Client_ResetStatsAndAchievements() noexcept
     {
         GetClient()->ResetStatsAndAchievements();
     }
 
-    char const* AGS2Client_GetUserName()
+    char const* AGS2Client_GetUserName() noexcept
     {
         return GetClient()->GetUserName();
     }
 
-    IAGS2Client::~IAGS2Client()
+    IAGS2Client::~IAGS2Client() noexcept
     {
     }
 } // namespace AGS2Client

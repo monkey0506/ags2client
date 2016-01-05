@@ -44,13 +44,13 @@ namespace AGS2Client
         virtual ~IClientLeaderboards() = 0;
     };
 
-    IClientLeaderboards* GetClientLeaderboards();
-    void ClientLeaderboards_RequestLeaderboard(char const *leaderboardName, int type, int limit);
-    int ClientLeaderboards_UploadScore(int score);
-    char const* ClientLeaderboards_GetCurrentLeaderboardName();
-    char const* ClientLeaderboards_GetLeaderName(int index);
-    int ClientLeaderboards_GetLeaderScore(int index);
-    int ClientLeaderboards_GetLeaderCount();
+    IClientLeaderboards* GetClientLeaderboards() noexcept;
+    void ClientLeaderboards_RequestLeaderboard(char const *leaderboardName, int type, int limit) noexcept;
+    int ClientLeaderboards_UploadScore(int score) noexcept;
+    char const* ClientLeaderboards_GetCurrentLeaderboardName() noexcept;
+    char const* ClientLeaderboards_GetLeaderName(int index) noexcept;
+    int ClientLeaderboards_GetLeaderScore(int index) noexcept;
+    int ClientLeaderboards_GetLeaderCount() noexcept;
 } // namespace AGS2Client
 
 #endif // AGS2CLIENT_ICLIENTLEADERBOARDS_H
