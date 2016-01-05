@@ -1,6 +1,6 @@
 // AGS2Client
 // Client Plugin Interface for AGS
-// Copyright © 2015 MonkeyMoto Productions, Inc.
+// Copyright © 2015-2016 MonkeyMoto Productions, Inc.
 //
 // This work is free. You can redistribute it and/or modify it under the
 // terms of the Do What The Fuck You Want To Public License, Version 2,
@@ -29,19 +29,9 @@ namespace AGS2Client
         return (GetClientStats() == nullptr ? 0 : GetClientStats()->GetIntStat(name));
     }
 
-    int ClientStats_GetGlobalIntStat(char const *name)
-    {
-        return (GetClientStats() == nullptr ? 0 : GetClientStats()->GetIntStat(name));
-    }
-
     float ClientStats_GetFloatStat(char const *name)
     {
         return (GetClientStats() == nullptr ? 0.0f : GetClientStats()->GetFloatStat(name));
-    }
-
-    float ClientStats_GetGlobalFloatStat(char const *name)
-    {
-        return (GetClientStats() == nullptr ? 0.0f : GetClientStats()->GetGlobalFloatStat(name));
     }
 
     float ClientStats_GetAverageRateStat(char const *name)

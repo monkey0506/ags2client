@@ -1,6 +1,6 @@
 // AGS2Client
 // Client Plugin Interface for AGS
-// Copyright © 2015 MonkeyMoto Productions, Inc.
+// Copyright © 2015-2016 MonkeyMoto Productions, Inc.
 //
 // This work is free. You can redistribute it and/or modify it under the
 // terms of the Do What The Fuck You Want To Public License, Version 2,
@@ -57,11 +57,12 @@ namespace AGS2Client
         return clientName.c_str();
     }
 
-    char const* IAGS2Client::GetAGSScriptHeader(float version) const
+    char const* IAGS2Client::GetAGSScriptHeader() const
     {
         static std::string generatedHeader;
         if (generatedHeader.empty())
         {
+			float version = this->GetVersion();
             std::string clientName{ this->GetClientNameForScript() };
             std::ostringstream header;
             header <<
@@ -103,31 +104,23 @@ namespace AGS2Client
                 "  import static float GetAverageRateStat(const string name);\r\n"
                 "  ///" << clientName << ": Resets all stats and achievements\r\n"
                 "  import static void ResetStatsAndAchievements();\r\n"
-                << this->GetInitializeSignatureForScriptHeader() <<
                 "  ///" << clientName << ": Returns whether the client is loaded and the user logged in\r\n"
                 "  readonly import static attribute int Initialized;\r\n"
-                "  ///" << clientName << ": Returns the value of a global INT stat\r\n"
-                "  import static int GetGlobalIntStat(const string name);\r\n"
-                "  ///" << clientName << ": Returns the value of a global FLOAT stat\r\n"
-                "  import static float GetGlobalFloatStat(const string name);\r\n"
                 "  ///" << clientName << ": Returns the name of the current leaderboard (call FindLeaderboard first)\r\n"
                 "  readonly import static attribute String CurrentLeaderboardName;\r\n"
                 "  ///" << clientName << ": Requests to load the specified leaderboard. This call is asynchronous and does not return the data immediately, check for results in repeatedly_execute\r\n"
-                "  import static void FindLeaderboard(const string leaderboardName);\r\n"
-                "  ///" << clientName << ": Uploads the score to the current leaderboard. Returns false if an error occurs\r\n"
+                "  import static void RequestLeaderboard(const string leaderboardName, " << clientName << "ScoresRequestType, int limit=10);\r\n"
+                "  ///" << clientName << ": Uploads the score to the current leaderboard (call RequestLeaderboard first). Returns false if an error occurs\r\n"
                 "  import static int UploadScore(int score);\r\n"
-                "  ///" << clientName << ": Downloads a list of ten scores from the current leaderboard\r\n"
-                "  import static int DownloadScores(" << clientName << "ScoresRequestType);\r\n"
-                "  ///" << clientName << ": Returns the name associated with a downloaded score. Call DownloadScores first\r\n"
+                "  ///" << clientName << ": Returns the name associated with a leaderboard rank (call RequestLeaderboard first)\r\n"
                 "  readonly import static attribute String LeaderboardNames[];\r\n"
-                "  ///" << clientName << ": Returns a downloaded score. Call DownloadScores first.\r\n"
+                "  ///" << clientName << ": Returns a leader's score from the current leaderboard (call RequestLeaderboard first)\r\n"
                 "  readonly import static attribute int LeaderboardScores[];\r\n"
-                "  ///" << clientName << ": Returns the number of downloaded scores (if any). Call DownloadScores first. Max is 10 scores\r\n"
+                "  ///" << clientName << ": Returns the number of leaders in the current leaderboard (if any) (call RequestLeaderboard first)\r\n"
                 "  readonly import static attribute int LeaderboardCount;\r\n"
-                "  ///" << clientName << ": Returns the current game language as registered by the client\r\n"
-                "  import static String GetCurrentGameLanguage();\r\n"
                 "  ///" << clientName << ": Returns the username from the client\r\n"
                 "  import static String GetUserName();\r\n"
+                << this->GetExtraFunctionsForScriptHeader() <<
                 "};\r\n"
                 "\r\n";
             generatedHeader = header.str();
@@ -135,7 +128,7 @@ namespace AGS2Client
         return generatedHeader.c_str();
     }
 
-    char const* IAGS2Client::GetInitializeSignatureForScriptHeader() const
+    char const* IAGS2Client::GetExtraFunctionsForScriptHeader() const
     {
         return "";
     }
@@ -155,16 +148,12 @@ namespace AGS2Client
         functions[clientName + "::UpdateAverageRateStat^3"] = reinterpret_cast<void*>(ClientStats_UpdateAverageRateStat);
         functions[clientName + "::ResetStatsAndAchievements^0"] = reinterpret_cast<void*>(AGS2Client_ResetStatsAndAchievements);
         functions[clientName + "::get_Initialized"] = reinterpret_cast<void*>(AGS2Client_IsInitialized);
-        functions[clientName + "::GetGlobalIntStat^1"] = reinterpret_cast<void*>(ClientStats_GetGlobalIntStat);
-        functions[clientName + "::GetGlobalFloatStat^1"] = reinterpret_cast<void*>(ClientStats_GetGlobalFloatStat);
         functions[clientName + "::get_CurrentLeaderboardName"] = reinterpret_cast<void*>(ClientLeaderboards_GetCurrentLeaderboardName);
-        functions[clientName + "::FindLeaderboard^1"] = reinterpret_cast<void*>(ClientLeaderboards_FindLeaderboard);
+        functions[clientName + "::RequestLeaderboard^3"] = reinterpret_cast<void*>(ClientLeaderboards_RequestLeaderboard);
         functions[clientName + "::UploadScore^1"] = reinterpret_cast<void*>(ClientLeaderboards_UploadScore);
-        functions[clientName + "::DownloadScores^1"] = reinterpret_cast<void*>(ClientLeaderboards_DownloadScores);
         functions[clientName + "::geti_LeaderboardNames"] = reinterpret_cast<void*>(ClientLeaderboards_GetLeaderName);
         functions[clientName + "::geti_LeaderboardScores"] = reinterpret_cast<void*>(ClientLeaderboards_GetLeaderScore);
         functions[clientName + "::get_LeaderboardCount"] = reinterpret_cast<void*>(ClientLeaderboards_GetLeaderCount);
-        functions[clientName + "::GetCurrentGameLanguage^0"] = reinterpret_cast<void*>(AGS2Client_GetCurrentGameLanguage);
         functions[clientName + "::GetUserName^0"] = reinterpret_cast<void*>(AGS2Client_GetUserName);
         for (auto &func : functions)
         {
@@ -180,11 +169,6 @@ namespace AGS2Client
     void AGS2Client_ResetStatsAndAchievements()
     {
         GetClient()->ResetStatsAndAchievements();
-    }
-
-    char const* AGS2Client_GetCurrentGameLanguage()
-    {
-        return GetClient()->GetCurrentGameLanguage();
     }
 
     char const* AGS2Client_GetUserName()

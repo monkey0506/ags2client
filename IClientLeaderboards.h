@@ -1,6 +1,6 @@
 // AGS2Client
 // Client Plugin Interface for AGS
-// Copyright © 2015 MonkeyMoto Productions, Inc.
+// Copyright © 2015-2016 MonkeyMoto Productions, Inc.
 //
 // This work is free. You can redistribute it and/or modify it under the
 // terms of the Do What The Fuck You Want To Public License, Version 2,
@@ -25,12 +25,18 @@
 
 namespace AGS2Client
 {
+	enum class LeaderboardScoreType
+	{
+		Global = 0,
+		AroundUser = 1,
+		Friends = 2
+	};
+
     class IClientLeaderboards
     {
     public:
-        virtual void FindLeaderboard(char const *leaderboardName) const = 0;
+        virtual void RequestLeaderboard(char const *leaderboardName, LeaderboardScoreType type, int limit) const = 0;
         virtual bool UploadScore(int score) const = 0;
-        virtual bool DownloadScores(int type) const = 0;
         virtual char const* GetCurrentLeaderboardName() const = 0;
         virtual char const* GetLeaderName(int index) const = 0;
         virtual int GetLeaderScore(int index) const = 0;
@@ -39,9 +45,8 @@ namespace AGS2Client
     };
 
     IClientLeaderboards* GetClientLeaderboards();
-    void ClientLeaderboards_FindLeaderboard(char const *leaderboardName);
+    void ClientLeaderboards_RequestLeaderboard(char const *leaderboardName, int type, int limit);
     int ClientLeaderboards_UploadScore(int score);
-    int ClientLeaderboards_DownloadScores(int type);
     char const* ClientLeaderboards_GetCurrentLeaderboardName();
     char const* ClientLeaderboards_GetLeaderName(int index);
     int ClientLeaderboards_GetLeaderScore(int index);

@@ -1,6 +1,6 @@
 // AGS2Client
 // Client Plugin Interface for AGS
-// Copyright © 2015 MonkeyMoto Productions, Inc.
+// Copyright © 2015-2016 MonkeyMoto Productions, Inc.
 //
 // This work is free. You can redistribute it and/or modify it under the
 // terms of the Do What The Fuck You Want To Public License, Version 2,
@@ -34,19 +34,14 @@ namespace AGS2Client
         return (leaderboardName == nullptr ? nullptr : engine->CreateScriptString(leaderboardName));
     }
 
-    void ClientLeaderboards_FindLeaderboard(char const *leaderboardName)
+    void ClientLeaderboards_RequestLeaderboard(char const *leaderboardName, int type, int limit)
     {
-        if (GetClientLeaderboards() != nullptr) GetClientLeaderboards()->FindLeaderboard(leaderboardName);
+        if (GetClientLeaderboards() != nullptr) GetClientLeaderboards()->RequestLeaderboard(leaderboardName, static_cast<LeaderboardScoreType>(type), limit);
     }
 
     int ClientLeaderboards_UploadScore(int score)
     {
         return (GetClientLeaderboards() == nullptr ? 0 : GetClientLeaderboards()->UploadScore(score));
-    }
-
-    int ClientLeaderboards_DownloadScores(int rawType)
-    {
-        return (GetClientLeaderboards() == nullptr ? 0 : GetClientLeaderboards()->DownloadScores(rawType));
     }
 
     char const* ClientLeaderboards_GetLeaderName(int index)

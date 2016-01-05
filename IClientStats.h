@@ -1,6 +1,6 @@
 // AGS2Client
 // Client Plugin Interface for AGS
-// Copyright © 2015 MonkeyMoto Productions, Inc.
+// Copyright © 2015-2016 MonkeyMoto Productions, Inc.
 //
 // This work is free. You can redistribute it and/or modify it under the
 // terms of the Do What The Fuck You Want To Public License, Version 2,
@@ -41,8 +41,6 @@ namespace AGS2Client
         virtual bool SetIntStat(char const *name, int value) const = 0;
         virtual bool SetFloatStat(char const *name, float value) const = 0;
         virtual bool UpdateAverageRateStat(char const *name, float countThisSession, float sessionLength) const = 0;
-        virtual int GetGlobalIntStat(char const *name) const = 0;
-        virtual float GetGlobalFloatStat(char const *name) const = 0;
         virtual ~IClientStats() = 0;
     }; // class IClientStats
 
@@ -53,8 +51,6 @@ namespace AGS2Client
     int ClientStats_SetIntStat(char const *name, int value);
     int ClientStats_SetFloatStat(char const *name, float value);
     int ClientStats_UpdateAverageRateStat(char const *name, float countThisSession, float sessionLength);
-    int ClientStats_GetGlobalIntStat(char const *name);
-    float ClientStats_GetGlobalFloatStat(char const *name);
 } // namespace AGS2Client
 
 #endif // AGS2CLIENT_ICLIENTSTATS_H

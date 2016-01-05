@@ -1,6 +1,6 @@
 // AGS2Client
 // Client Plugin Interface for AGS
-// Copyright © 2015 MonkeyMoto Productions, Inc.
+// Copyright © 2015-2016 MonkeyMoto Productions, Inc.
 //
 // This work is free. You can redistribute it and/or modify it under the
 // terms of the Do What The Fuck You Want To Public License, Version 2,
@@ -114,7 +114,7 @@ void AGS_EngineStartup(IAGSEngine *lpEngine)
         engine->AbortGame("Engine interface is too old, need newer version of AGS.");
     }
 
-    AGS2Client::GetClient()->AttemptDefaultInitialization();
+    AGS2Client::GetClient()->Startup();
     AGS2Client::GetClient()->RegisterScriptFunctions(engine);
 
     engine->RequestEventHook(AGSE_FINALSCREENDRAW);
