@@ -23,6 +23,8 @@
 #ifndef AGS2CLIENT_ICLIENTSTATS_H
 #define AGS2CLIENT_ICLIENTSTATS_H
 
+#include "AGSFloatFix.h"
+
 namespace AGS2Client
 {
     enum class ClientStatTypes
@@ -46,11 +48,11 @@ namespace AGS2Client
 
     IClientStats* GetClientStats() noexcept;
     int ClientStats_GetIntStat(char const *name) noexcept;
-    float ClientStats_GetFloatStat(char const *name) noexcept;
-    float ClientStats_GetAverageRateStat(char const *name) noexcept;
+    AGS::float_t ClientStats_GetFloatStat(char const *name) noexcept;
+    AGS::float_t ClientStats_GetAverageRateStat(char const *name) noexcept;
     int ClientStats_SetIntStat(char const *name, int value) noexcept;
-    int ClientStats_SetFloatStat(char const *name, float value) noexcept;
-    int ClientStats_UpdateAverageRateStat(char const *name, float countThisSession, float sessionLength) noexcept;
+    int ClientStats_SetFloatStat(char const *name, AGS::float_t value) noexcept;
+    int ClientStats_UpdateAverageRateStat(char const *name, AGS::float_t countThisSession, AGS::float_t sessionLength) noexcept;
 } // namespace AGS2Client
 
 #endif // AGS2CLIENT_ICLIENTSTATS_H

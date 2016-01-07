@@ -34,14 +34,16 @@ namespace AGS2Client
 		return (GetClientStats() == nullptr ? 0 : GetClientStats()->GetIntStat(name));
 	}
 
-	float ClientStats_GetFloatStat(char const *name) noexcept
+	AGS::float_t ClientStats_GetFloatStat(char const *name) noexcept
 	{
-		return (GetClientStats() == nullptr ? 0.0f : GetClientStats()->GetFloatStat(name));
+		float value;
+		return FLOAT2AGS(value = (GetClientStats() == nullptr ? 0.0f : GetClientStats()->GetFloatStat(name)));
 	}
 
-	float ClientStats_GetAverageRateStat(char const *name) noexcept
+	AGS::float_t ClientStats_GetAverageRateStat(char const *name) noexcept
 	{
-		return (GetClientStats() == nullptr ? 0.0f : GetClientStats()->GetAverageRateStat(name));
+		float value;
+		return FLOAT2AGS(value = (GetClientStats() == nullptr ? 0.0f : GetClientStats()->GetAverageRateStat(name)));
 	}
 
 	int ClientStats_SetIntStat(char const *name, int value) noexcept
@@ -49,13 +51,13 @@ namespace AGS2Client
 		return (GetClientStats() == nullptr ? 0 : GetClientStats()->SetIntStat(name, value));
 	}
 
-	int ClientStats_SetFloatStat(const char *name, float value) noexcept
+	int ClientStats_SetFloatStat(char const *name, AGS::float_t value) noexcept
 	{
-		return (GetClientStats() == nullptr ? 0 : GetClientStats()->SetFloatStat(name, value));
+		return (GetClientStats() == nullptr ? 0 : GetClientStats()->SetFloatStat(name, AGS2FLOAT(value)));
 	}
 
-	int ClientStats_UpdateAverageRateStat(const char *name, float numerator, float denominator) noexcept
+	int ClientStats_UpdateAverageRateStat(char const *name, AGS::float_t numerator, AGS::float_t denominator) noexcept
 	{
-		return (GetClientStats() == nullptr ? 0 : GetClientStats()->UpdateAverageRateStat(name, numerator, denominator));
+		return (GetClientStats() == nullptr ? 0 : GetClientStats()->UpdateAverageRateStat(name, AGS2FLOAT(numerator), AGS2FLOAT(denominator)));
 	}
 }
