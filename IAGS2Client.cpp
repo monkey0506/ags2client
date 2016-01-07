@@ -85,7 +85,7 @@ char const* IAGS2Client::GetAGSScriptHeader() const noexcept
 		if (pluginName != clientName) // account for the unlikely event that pluginName has no usable characters and defaults to AGS2Client
 		{
 			// include plugin's ACTUAL name version macro
-			header << "#define " << pluginName << "_VERSION" << version << "\r\n";
+			header << "#define " << pluginName << "_VERSION " << version << "\r\n";
 		}
 #endif // AGS2CLIENT_UNIFIED_CLIENT_NAME
 		header <<
