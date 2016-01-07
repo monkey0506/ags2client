@@ -21,40 +21,41 @@
 //  0. You just DO WHAT THE FUCK YOU WANT TO.
 //
 #include "IClientStats.h"
+using namespace AGS2Client;
+
+IClientStats::~IClientStats() noexcept
+{
+}
 
 namespace AGS2Client
 {
-    int ClientStats_GetIntStat(char const *name) noexcept
-    {
-        return (GetClientStats() == nullptr ? 0 : GetClientStats()->GetIntStat(name));
-    }
+	int ClientStats_GetIntStat(char const *name) noexcept
+	{
+		return (GetClientStats() == nullptr ? 0 : GetClientStats()->GetIntStat(name));
+	}
 
-    float ClientStats_GetFloatStat(char const *name) noexcept
-    {
-        return (GetClientStats() == nullptr ? 0.0f : GetClientStats()->GetFloatStat(name));
-    }
+	float ClientStats_GetFloatStat(char const *name) noexcept
+	{
+		return (GetClientStats() == nullptr ? 0.0f : GetClientStats()->GetFloatStat(name));
+	}
 
-    float ClientStats_GetAverageRateStat(char const *name) noexcept
-    {
-        return (GetClientStats() == nullptr ? 0.0f : GetClientStats()->GetAverageRateStat(name));
-    }
+	float ClientStats_GetAverageRateStat(char const *name) noexcept
+	{
+		return (GetClientStats() == nullptr ? 0.0f : GetClientStats()->GetAverageRateStat(name));
+	}
 
-    int ClientStats_SetIntStat(char const *name, int value) noexcept
-    {
-        return (GetClientStats() == nullptr ? 0 : GetClientStats()->SetIntStat(name, value));
-    }
+	int ClientStats_SetIntStat(char const *name, int value) noexcept
+	{
+		return (GetClientStats() == nullptr ? 0 : GetClientStats()->SetIntStat(name, value));
+	}
 
-    int ClientStats_SetFloatStat(const char *name, float value) noexcept
-    {
-        return (GetClientStats() == nullptr ? 0 : GetClientStats()->SetFloatStat(name, value));
-    }
+	int ClientStats_SetFloatStat(const char *name, float value) noexcept
+	{
+		return (GetClientStats() == nullptr ? 0 : GetClientStats()->SetFloatStat(name, value));
+	}
 
-    int ClientStats_UpdateAverageRateStat(const char *name, float numerator, float denominator) noexcept
-    {
-        return (GetClientStats() == nullptr ? 0 : GetClientStats()->UpdateAverageRateStat(name, numerator, denominator));
-    }
-
-    IClientStats::~IClientStats() noexcept
-    {
-    }
-} // namespace AGS2Client
+	int ClientStats_UpdateAverageRateStat(const char *name, float numerator, float denominator) noexcept
+	{
+		return (GetClientStats() == nullptr ? 0 : GetClientStats()->UpdateAverageRateStat(name, numerator, denominator));
+	}
+}
