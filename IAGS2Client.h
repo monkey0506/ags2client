@@ -30,6 +30,7 @@ namespace AGS2Client
     class IAGS2Client
     {
     public:
+		static float constexpr const VERSION = 2.0f;
         virtual bool IsInitialized() const = 0;
         virtual void ResetStatsAndAchievements() const = 0;
         virtual char const* GetUserName() const = 0;
