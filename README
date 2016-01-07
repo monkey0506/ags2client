@@ -5,5 +5,55 @@ purpose of this project is to allow easy replacement of any
 proprietary or closed-source client plugins (e.g., AGSteam) as well
 as creating a common interface for developers.
 
+********************
+UNIFIED CLIENT NAME:
+********************
+
+Client plugins using AGS2Client can now take advantage of the macro
+AGS2CLIENT_UNIFIED_CLIENT_NAME at plugin build-time. If this macro
+is defined when you build your plugin, then the generated script
+headers for AGS will use the name "AGS2Client" for your plugin,
+intead of "AGSteam" or "AGSGalaxy" (etc.). This allows you to replace
+a call such as:
+
+    AGSteam.IsAchievementAchieved("ACHIEVEMENT_NAME");
+
+With:
+
+    AGS2Client.IsAchievementAchieved("ACHIEVEMENT_NAME");
+
+The benefit of this is that if you have two (or more) plugins, such
+as AGSteam and AGSGalaxy, that have the same achievement set up on
+the client backend websites (e.g., "ACHIEVEMENT_NAME"), then you can
+toggle between building for Steam and building for GOG Galaxy by
+simply enabling the appropriate plugin (and disabling the other one).
+There is no longer a necessity to have separate AGS scripts for each
+client! (NOTE: Galaxy requires a unique initialization process, more
+info is included with that plugin's README)
+
+This means you can turn:
+
+    #ifdef AGSteam_VERSION
+    AGSteam.SetAchievement("ACHIEVEMENT_NAME");
+    #endif // AGSteam_VERSION
+    #ifdef AGSGalaxy_VERSION
+    AGSGalaxy.SetAchievement("ACHIEVEMENT_NAME");
+    #endif // AGSGalaxy_VERSION
+
+Much more simply (and readably) into:
+
+    #ifdef AGS2Client_VERSION
+    AGS2Client.SetAchievement("ACHIEVEMENT_NAME");
+    #endif // AGS2Client
+
+And this will work for Steam, GOG Galaxy, or even if both plugins
+are disabled! (NOTE: Separate versions of these client plugins are
+provided. This method works only with the "UNIFIED" version and may
+not work if you simply "grab" the DLL from another game. See client
+plugin READMEs for more details)
+
+
+***************************************************
+
 Please contact monkey_05_06 at the AGS Forums or at
 monkey0506@gmail.com with any feedback or questions.

@@ -42,10 +42,10 @@ using namespace AGS2Client;
 
 IAGSEngine *GetAGSEngine();
 
-char const* IAGS2Client::GetClientNameForScript() const noexcept
+char const* IAGS2Client_GetPluginNameStripped() noexcept
 {
-	static std::string clientName;
-	if (clientName.empty())
+	static std::string pluginName;
+	if (pluginName.empty())
 	{
 		std::string buffer{ GetClient()->GetAGSPluginName() };
 		buffer.erase(std::remove_if(buffer.begin(), buffer.end(), [](char c)
@@ -53,7 +53,21 @@ char const* IAGS2Client::GetClientNameForScript() const noexcept
 			return (((c < 48) || (c > 57)) && ((c < 65) || (c > 90)) && (c != 95) && ((c < 97) || (c > 122)));
 		}), buffer.end());
 		buffer.erase(0, buffer.find_first_not_of("0123456789"));
-		clientName = (buffer.empty() ? "AGS2Client" : buffer);
+		pluginName = (buffer.empty() ? "AGS2Client" : buffer);
+	}
+	return pluginName.c_str();
+}
+
+char const* IAGS2Client::GetClientNameForScript() const noexcept
+{
+	static std::string clientName;
+	if (clientName.empty())
+	{
+#ifdef AGS2CLIENT_UNIFIED_CLIENT_NAME
+		clientName = "AGS2Client";
+#else // !AGS2CLIENT_UNIFIED_CLIENT_NAME
+		clientName = IAGS2Client_GetPluginNameStripped();
+#endif // AGS2CLIENT_UNIFIED_CLIENT_NAME
 	}
 	return clientName.c_str();
 }
@@ -66,6 +80,14 @@ char const* IAGS2Client::GetAGSScriptHeader() const noexcept
 		float version = this->GetVersion();
 		std::string clientName{ this->GetClientNameForScript() };
 		std::ostringstream header;
+#ifdef AGS2CLIENT_UNIFIED_CLIENT_NAME
+		std::string pluginName{ IAGS2Client_GetPluginNameStripped() };
+		if (pluginName != clientName) // account for the unlikely event that pluginName has no usable characters and defaults to AGS2Client
+		{
+			// include plugin's ACTUAL name version macro
+			header << "#define " << pluginName << "_VERSION" << version << "\r\n";
+		}
+#endif // AGS2CLIENT_UNIFIED_CLIENT_NAME
 		header <<
 			"#define " << clientName << "_VERSION " << version << "\r\n"
 			"\r\n"
