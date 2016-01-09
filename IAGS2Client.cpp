@@ -84,8 +84,10 @@ char const* IAGS2Client::GetAGSScriptHeader() const noexcept
 		std::string pluginName{ IAGS2Client_GetPluginNameStripped() };
 		if (pluginName != clientName) // account for the unlikely event that pluginName has no usable characters and defaults to AGS2Client
 		{
-			// include plugin's ACTUAL name version macro
-			header << "#define " << pluginName << "_VERSION " << version << "\r\n";
+			// include plugin's ACTUAL name version macro (if it is not already included by DISJOINT plugin!)
+			header << "#ifndef " << pluginName << "_VERSION\r\n"
+				"#define " << pluginName << "_VERSION " << version << "\r\n"
+				"#endif // " << pluginName << "_VERSION\r\n";
 		}
 #endif // AGS2CLIENT_UNIFIED_CLIENT_NAME
 		header <<
