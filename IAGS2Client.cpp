@@ -40,18 +40,22 @@
 #include "IClientStats.h"
 using namespace AGS2Client;
 
+float constexpr const IAGS2Client::VERSION = 2.0f;
+
 IAGSEngine *GetAGSEngine();
+
+bool StripPluginName_IsInvalidChar(char c)
+{
+	return (((c < 48) || (c > 57)) && ((c < 65) || (c > 90)) && (c != 95) && ((c < 97) || (c > 122)));
+}
 
 char const* IAGS2Client_GetPluginNameStripped() noexcept
 {
 	static std::string pluginName;
 	if (pluginName.empty())
 	{
-		std::string buffer{ GetClient()->GetAGSPluginName() };
-		buffer.erase(std::remove_if(buffer.begin(), buffer.end(), [](char c)
-		{
-			return (((c < 48) || (c > 57)) && ((c < 65) || (c > 90)) && (c != 95) && ((c < 97) || (c > 122)));
-		}), buffer.end());
+		std::string buffer(GetClient()->GetAGSPluginName());
+		buffer.erase(std::remove_if(buffer.begin(), buffer.end(), StripPluginName_IsInvalidChar), buffer.end());
 		buffer.erase(0, buffer.find_first_not_of("0123456789"));
 		pluginName = (buffer.empty() ? "AGS2Client" : buffer);
 	}
@@ -78,10 +82,10 @@ char const* IAGS2Client::GetAGSScriptHeader() const noexcept
 	if (generatedHeader.empty())
 	{
 		float version = this->GetVersion();
-		std::string clientName{ this->GetClientNameForScript() };
+		std::string clientName(this->GetClientNameForScript());
 		std::ostringstream header;
 #ifdef AGS2CLIENT_UNIFIED_CLIENT_NAME
-		std::string pluginName{ IAGS2Client_GetPluginNameStripped() };
+		std::string pluginName(IAGS2Client_GetPluginNameStripped());
 		if (pluginName != clientName) // account for the unlikely event that pluginName has no usable characters and defaults to AGS2Client
 		{
 			// include plugin's ACTUAL name version macro (if it is not already included by DISJOINT plugin!)
@@ -160,8 +164,14 @@ char const* IAGS2Client::GetExtraFunctionsForScriptHeader() const noexcept
 
 void IAGS2Client::RegisterScriptFunctions(IAGSEngine *engine) const noexcept
 {
+#if __cplusplus <= 199711L // NOT C++11
+	static std::tr1::unordered_map<std::string, void*> functions; // RegisterScriptFunction does not copy the buffer, we must persist it ourselves
+	typedef std::tr1::unordered_map<std::string, void*>::iterator functions_iterator;
+#else // C++11
 	static std::unordered_map<std::string, void*> functions; // RegisterScriptFunction does not copy the buffer, we must persist it ourselves
-	std::string clientName{ this->GetClientNameForScript() };
+	typedef std::unordered_map<std::string, void*>::iterator functions_iterator;
+#endif // C++11
+	std::string clientName(this->GetClientNameForScript());
 	functions[clientName + "::IsAchievementAchieved^1"] = reinterpret_cast<void*>(ClientAchievements_IsAchievementAchieved);
 	functions[clientName + "::SetAchievementAchieved^1"] = reinterpret_cast<void*>(ClientAchievements_SetAchievementAchieved);
 	functions[clientName + "::ResetAchievement^1"] = reinterpret_cast<void*>(ClientAchievements_ResetAchievement);
@@ -180,9 +190,9 @@ void IAGS2Client::RegisterScriptFunctions(IAGSEngine *engine) const noexcept
 	functions[clientName + "::geti_LeaderboardScores"] = reinterpret_cast<void*>(ClientLeaderboards_GetLeaderScore);
 	functions[clientName + "::get_LeaderboardCount"] = reinterpret_cast<void*>(ClientLeaderboards_GetLeaderCount);
 	functions[clientName + "::GetUserName^0"] = reinterpret_cast<void*>(AGS2Client_GetUserName);
-	for (auto &func : functions)
+	for (functions_iterator it = functions.begin(); it != functions.end(); ++it)
 	{
-		engine->RegisterScriptFunction(func.first.c_str(), func.second);
+		engine->RegisterScriptFunction(it->first.c_str(), it->second);
 	}
 }
 

@@ -24,11 +24,11 @@
 #ifndef AGS2CLIENT_AGSFLOATFIX_H
 #define AGS2CLIENT_AGSFLOATFIX_H
 
-#include <cstdint>
+#include "Cpp11Fix.h"
 
 namespace AGS
 {
-	using float_t = std::int32_t;
+	typedef STD_INT32_T float_t;
 } // namespace AGS
 
 #define FLOAT2AGS(x) *reinterpret_cast<AGS::float_t*>(&(x))

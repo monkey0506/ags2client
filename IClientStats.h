@@ -27,12 +27,15 @@
 
 namespace AGS2Client
 {
-    enum class ClientStatTypes
-    {
-        ClientStatInt = 0,
-        ClientStatFloat = 1,
-        ClientStatAvgRate = 2
-    };
+	namespace ClientStat
+	{
+		enum Types
+		{
+			ClientStatInt = 0,
+			ClientStatFloat = 1,
+			ClientStatAvgRate = 2
+		}; // enum Types
+	} // namespace ClientStat
 
     class IClientStats
     {

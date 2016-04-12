@@ -41,7 +41,7 @@ namespace AGS2Client
 
 	void ClientLeaderboards_RequestLeaderboard(char const *leaderboardName, int type, int limit) noexcept
 	{
-		if (GetClientLeaderboards() != nullptr) GetClientLeaderboards()->RequestLeaderboard(leaderboardName, static_cast<LeaderboardScoreType>(type), limit);
+		if (GetClientLeaderboards() != nullptr) GetClientLeaderboards()->RequestLeaderboard(leaderboardName, static_cast<LeaderboardScore::Type>(type), limit);
 	}
 
 	int ClientLeaderboards_UploadScore(int score) noexcept

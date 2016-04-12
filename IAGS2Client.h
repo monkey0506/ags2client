@@ -23,6 +23,8 @@
 #ifndef AGS2CLIENT_IAGS2CLIENT_H
 #define AGS2CLIENT_IAGS2CLIENT_H
 
+#include "Cpp11Fix.h"
+
 class IAGSEngine;
 
 namespace AGS2Client
@@ -30,7 +32,7 @@ namespace AGS2Client
     class IAGS2Client
     {
     public:
-		static float constexpr const VERSION = 2.0f;
+		static float constexpr const VERSION; // see definition in cpp file
         virtual bool IsInitialized() const = 0;
         virtual void ResetStatsAndAchievements() const = 0;
         virtual char const* GetUserName() const = 0;

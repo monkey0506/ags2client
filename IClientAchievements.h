@@ -23,6 +23,8 @@
 #ifndef AGS2CLIENT_ICLIENTACHIEVEMENTS_H
 #define AGS2CLIENT_ICLIENTACHIEVEMENTS_H
 
+#include "Cpp11Fix.h"
+
 namespace AGS2Client
 {
     class IClientAchievements

@@ -23,19 +23,24 @@
 #ifndef AGS2CLIENT_ICLIENTLEADERBOARDS_H
 #define AGS2CLIENT_ICLIENTLEADERBOARDS_H
 
+#include "Cpp11Fix.h"
+
 namespace AGS2Client
 {
-	enum class LeaderboardScoreType
+	namespace LeaderboardScore
 	{
-		Global = 0,
-		AroundUser = 1,
-		Friends = 2
-	};
+		enum Type
+		{
+			Global = 0,
+			AroundUser = 1,
+			Friends = 2
+		}; // Type
+	} // LeaderboardScore
 
     class IClientLeaderboards
     {
     public:
-        virtual void RequestLeaderboard(char const *leaderboardName, LeaderboardScoreType type, int limit) const = 0;
+		virtual void RequestLeaderboard(char const *leaderboardName, LeaderboardScore::Type type, int limit) const = 0;
         virtual bool UploadScore(int score) const = 0;
         virtual char const* GetCurrentLeaderboardName() const = 0;
         virtual char const* GetLeaderName(int index) const = 0;
