@@ -53,11 +53,25 @@ namespace AGS2Client
 
 	int ClientStats_SetFloatStat(char const *name, AGS::float_t value) noexcept
 	{
+		#ifdef __GNUC__
+		#pragma GCC diagnostic push
+		#pragma GCC diagnostic ignored "-Wstrict-aliasing"
+		#endif // __GNUC__
 		return (GetClientStats() == nullptr ? 0 : GetClientStats()->SetFloatStat(name, AGS2FLOAT(value)));
+		#ifdef __GNUC__
+		#pragma GCC diagnostic pop
+		#endif // __GNUC__
 	}
 
 	int ClientStats_UpdateAverageRateStat(char const *name, AGS::float_t numerator, AGS::float_t denominator) noexcept
 	{
+		#ifdef __GNUC__
+		#pragma GCC diagnostic push
+		#pragma GCC diagnostic ignored "-Wstrict-aliasing"
+		#endif // __GNUC__
 		return (GetClientStats() == nullptr ? 0 : GetClientStats()->UpdateAverageRateStat(name, AGS2FLOAT(numerator), AGS2FLOAT(denominator)));
+		#ifdef __GNUC__
+		#pragma GCC diagnostic pop
+		#endif // __GNUC__
 	}
 }
