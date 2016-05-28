@@ -40,7 +40,9 @@
 #include "IClientStats.h"
 using namespace AGS2Client;
 
+#if __cplusplus <= 199711L // NOT C++11
 float constexpr const IAGS2Client::VERSION = 2.0f;
+#endif // C++11
 
 IAGSEngine *GetAGSEngine();
 
