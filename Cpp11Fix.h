@@ -1,14 +1,6 @@
-// AGSteamStub
-// Plugin stub for the Steam plugin for AGS
-// Copyright © 2014-2016 MonkeyMoto Productions, Inc.
-//
-// This stub is a non-functional replacement for the AGSteam plugin. The
-// full plugin cannot be made open-source due to restrictions enforced
-// by Valve's strict licensing on the Steamworks API. If you are a
-// developer who has signed an NDA with Valve and have access to
-// Steamworks, access can be granted to the full plugin source. For more
-// information you may contact monkey_05_06 on the AGS forums at:
-// <http://www.adventuregamestudio.co.uk/forums/index.php?action=profile&u=2015>
+// AGS2Client
+// Client Plugin Interface for AGS
+// Copyright © 2015-2016 MonkeyMoto Productions, Inc.
 //
 // This work is free. You can redistribute it and/or modify it under the
 // terms of the Do What The Fuck You Want To Public License, Version 2,
@@ -27,10 +19,6 @@
 //   TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 //
 //  0. You just DO WHAT THE FUCK YOU WANT TO.
-//
-// The AGSteamStub plugin may be licensed under future versions of
-// the WTFPL, or any compatible license which is not less restrictive.
-// See http://www.wtfpl.net/ for more details.
 //
 #ifndef CPP11FIX_H
 #define CPP11FIX_H
