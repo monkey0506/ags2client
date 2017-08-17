@@ -29,8 +29,10 @@
 #define __stdcall
 #endif // _WIN32, __linux__
 
+#include "Cpp11Fix.h"
+
 #include <algorithm>
-#include <unordered_map>
+#include TR1INCLUDE(unordered_map)
 #include <string>
 #include <sstream>
 #include "agsplugin.h"
@@ -166,13 +168,8 @@ char const* IAGS2Client::GetExtraFunctionsForScriptHeader() const noexcept
 
 void IAGS2Client::RegisterScriptFunctions(IAGSEngine *engine) const noexcept
 {
-#ifndef AGS2CLIENT_HAS_CPP11 // NOT C++11
-	static std::tr1::unordered_map<std::string, void*> functions; // RegisterScriptFunction does not copy the buffer, we must persist it ourselves
-	typedef std::tr1::unordered_map<std::string, void*>::iterator functions_iterator;
-#else // C++11
-	static std::unordered_map<std::string, void*> functions; // RegisterScriptFunction does not copy the buffer, we must persist it ourselves
-	typedef std::unordered_map<std::string, void*>::iterator functions_iterator;
-#endif // C++11
+    static stdtr1compat::unordered_map<std::string, void*> functions; // RegisterScriptFunction does not copy the buffer, we must persist it ourselves
+    typedef stdtr1compat::unordered_map<std::string, void*>::iterator functions_iterator;
 	std::string clientName(this->GetClientNameForScript());
 	functions[clientName + "::IsAchievementAchieved^1"] = reinterpret_cast<void*>(ClientAchievements_IsAchievementAchieved);
 	functions[clientName + "::SetAchievementAchieved^1"] = reinterpret_cast<void*>(ClientAchievements_SetAchievementAchieved);

@@ -27,6 +27,9 @@
 #define AGS2CLIENT_HAS_CPP11
 #endif
 
+#define MAKE_HEADER(arg) <arg>
+#define TR1INCLUDE(arg) MAKE_HEADER(arg) // default for C++11 compilers and MSVC (no tr1 folder)
+
 #ifndef AGS2CLIENT_HAS_CPP11
 
 #define constexpr
@@ -34,11 +37,21 @@
 #define nullptr 0
 #define STD_INT32_T int
 
+#ifndef _MSC_VER
+#undef TR1INCLUDE
+#define TR1INCLUDE(arg) MAKE_HEADER(tr1/arg) // non-MSVC compilers prior to C++11 need tr1 folder
+#endif // !_MSC_VER
+
+namespace std { namespace tr1 {} }
+namespace stdtr1compat = std::tr1;
+
 #else // C++11
 
 #include <cstdint>
 
 #define STD_INT32_T std::int32_t
+
+namespace stdtr1compat = std;
 
 #endif // C++11
 
