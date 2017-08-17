@@ -23,7 +23,11 @@
 #ifndef CPP11FIX_H
 #define CPP11FIX_H
 
-#if __cplusplus <= 199711L // NOT C++11
+#if ((__cplusplus >= 201103L) || (defined(_MSC_VER) && (_MSC_VER >= 1900)))
+#define AGS2CLIENT_HAS_CPP11
+#endif
+
+#ifndef AGS2CLIENT_HAS_CPP11
 
 #define constexpr
 #define noexcept

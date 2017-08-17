@@ -40,7 +40,7 @@
 #include "IClientStats.h"
 using namespace AGS2Client;
 
-#if __cplusplus <= 199711L // NOT C++11
+#ifndef AGS2CLIENT_HAS_CPP11 // NOT C++11
 float constexpr const IAGS2Client::VERSION = 2.0f;
 #endif // C++11
 
@@ -166,7 +166,7 @@ char const* IAGS2Client::GetExtraFunctionsForScriptHeader() const noexcept
 
 void IAGS2Client::RegisterScriptFunctions(IAGSEngine *engine) const noexcept
 {
-#if __cplusplus <= 199711L // NOT C++11
+#ifndef AGS2CLIENT_HAS_CPP11 // NOT C++11
 	static std::tr1::unordered_map<std::string, void*> functions; // RegisterScriptFunction does not copy the buffer, we must persist it ourselves
 	typedef std::tr1::unordered_map<std::string, void*>::iterator functions_iterator;
 #else // C++11

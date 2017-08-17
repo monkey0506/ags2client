@@ -32,10 +32,10 @@ namespace AGS2Client
     class IAGS2Client
     {
     public:
-		#if __cplusplus <= 199711L // NOT C++11
-		static float constexpr const VERSION; // see definition in cpp file
-		#else
-		static float constexpr const VERSION = 2.0f;
+		#ifndef AGS2CLIENT_HAS_CPP11 // NOT C++11
+        static float constexpr const VERSION; // see definition in cpp file
+		#else // C++11
+        static float constexpr const VERSION = 2.0f;
 		#endif // C++11
         virtual bool IsInitialized() const = 0;
         virtual void ResetStatsAndAchievements() const = 0;
