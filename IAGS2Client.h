@@ -47,6 +47,7 @@ namespace AGS2Client
         virtual char const* GetAGSPluginName() const = 0;
         virtual char const* GetAGSPluginDesc() const = 0;
         virtual char const* GetClientNameForScript() const noexcept;
+        virtual char const* GetCurrentGameLanguage() const = 0;
 		virtual char const* GetExtraFunctionsForScriptHeader() const noexcept;
 		virtual float GetVersion() const = 0;
         virtual bool ClaimKeyPress(int data, int(*IsKeyPressed)(int)) const = 0;
@@ -58,6 +59,7 @@ namespace AGS2Client
     int AGS2Client_IsInitialized() noexcept;
     void AGS2Client_ResetStatsAndAchievements() noexcept;
     char const* AGS2Client_GetUserName() noexcept;
+    char const* AGS2Client_GetCurrentGameLanguage();
 } // namespace AGS2Client
 
 #endif // AGS2CLIENT_IAGS2CLIENT_H

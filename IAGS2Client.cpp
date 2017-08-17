@@ -98,61 +98,63 @@ char const* IAGS2Client::GetAGSScriptHeader() const noexcept
 				"#endif // " << pluginName << "_VERSION\r\n";
 		}
 #endif // AGS2CLIENT_UNIFIED_CLIENT_NAME
-		header <<
-			"#define " << clientName << "_VERSION " << version << "\r\n"
-			"\r\n"
-			"enum " << clientName << "StatType\r\n"
-			"{\r\n"
-			"  e" << clientName << "StatInt = 0,\r\n"
-			"  e" << clientName << "StatFloat = 1,\r\n"
-			"  e" << clientName << "StatAverageRate = 2\r\n"
-			"};\r\n"
-			"\r\n"
-			"enum " << clientName << "ScoresRequestType\r\n"
-			"{\r\n"
-			"  e" << clientName << "ScoresRequestGlobal = 0,\r\n"
-			"  e" << clientName << "ScoresRequestAroundUser = 1,\r\n"
-			"  e" << clientName << "ScoresRequestFriends = 2\r\n"
-			"};\r\n"
-			"\r\n"
-			"managed struct " << clientName << "\r\n"
-			"{\r\n"
-			"  ///" << clientName << ": Returns whether the specified achievement has been achieved\r\n"
-			"  import static int IsAchievementAchieved(const string name);\r\n"
-			"  ///" << clientName << ": Sets an achievement as achieved\r\n"
-			"  import static int SetAchievementAchieved(const string name);\r\n"
-			"  ///" << clientName << ": Resets the specified achievement, so it can be achieved again\r\n"
-			"  import static int ResetAchievement(const string name);\r\n"
-			"  ///" << clientName << ": Sets the value of an INT stat\r\n"
-			"  import static int SetIntStat(const string name, int value);\r\n"
-			"  ///" << clientName << ": Sets the value of a FLOAT stat\r\n"
-			"  import static int SetFloatStat(const string name, float value);\r\n"
-			"  ///" << clientName << ": Updates an average rate stat\r\n"
-			"  import static int UpdateAverageRateStat(const string name, float countThisSession, float sessionLength);\r\n"
-			"  ///" << clientName << ": Returns the value of an INT stat\r\n"
-			"  import static int GetIntStat(const string name);\r\n"
-			"  ///" << clientName << ": Returns the value of a FLOAT stat\r\n"
-			"  import static float GetFloatStat(const string name);\r\n"
-			"  ///" << clientName << ": Returns the value of an average rate stat\r\n"
-			"  import static float GetAverageRateStat(const string name);\r\n"
-			"  ///" << clientName << ": Resets all stats and achievements\r\n"
-			"  import static void ResetStatsAndAchievements();\r\n"
-			"  ///" << clientName << ": Returns whether the client is loaded and the user logged in\r\n"
-			"  readonly import static attribute int Initialized;\r\n"
-			"  ///" << clientName << ": Returns the name of the current leaderboard (call FindLeaderboard first)\r\n"
-			"  readonly import static attribute String CurrentLeaderboardName;\r\n"
-			"  ///" << clientName << ": Requests to load the specified leaderboard. This call is asynchronous and does not return the data immediately, check for results in repeatedly_execute\r\n"
-			"  import static void RequestLeaderboard(const string leaderboardName, " << clientName << "ScoresRequestType, int limit=10);\r\n"
-			"  ///" << clientName << ": Uploads the score to the current leaderboard (call RequestLeaderboard first). Returns false if an error occurs\r\n"
-			"  import static int UploadScore(int score);\r\n"
-			"  ///" << clientName << ": Returns the name associated with a leaderboard rank (call RequestLeaderboard first)\r\n"
-			"  readonly import static attribute String LeaderboardNames[];\r\n"
-			"  ///" << clientName << ": Returns a leader's score from the current leaderboard (call RequestLeaderboard first)\r\n"
-			"  readonly import static attribute int LeaderboardScores[];\r\n"
-			"  ///" << clientName << ": Returns the number of leaders in the current leaderboard (if any) (call RequestLeaderboard first)\r\n"
-			"  readonly import static attribute int LeaderboardCount;\r\n"
-			"  ///" << clientName << ": Returns the username from the client\r\n"
-			"  import static String GetUserName();\r\n"
+        header <<
+            "#define " << clientName << "_VERSION " << version << "\r\n"
+            "\r\n"
+            "enum " << clientName << "StatType\r\n"
+            "{\r\n"
+            "  e" << clientName << "StatInt = 0,\r\n"
+            "  e" << clientName << "StatFloat = 1,\r\n"
+            "  e" << clientName << "StatAverageRate = 2\r\n"
+            "};\r\n"
+            "\r\n"
+            "enum " << clientName << "ScoresRequestType\r\n"
+            "{\r\n"
+            "  e" << clientName << "ScoresRequestGlobal = 0,\r\n"
+            "  e" << clientName << "ScoresRequestAroundUser = 1,\r\n"
+            "  e" << clientName << "ScoresRequestFriends = 2\r\n"
+            "};\r\n"
+            "\r\n"
+            "managed struct " << clientName << "\r\n"
+            "{\r\n"
+            "  ///" << clientName << ": Returns whether the specified achievement has been achieved\r\n"
+            "  import static int IsAchievementAchieved(const string name);\r\n"
+            "  ///" << clientName << ": Sets an achievement as achieved\r\n"
+            "  import static int SetAchievementAchieved(const string name);\r\n"
+            "  ///" << clientName << ": Resets the specified achievement, so it can be achieved again\r\n"
+            "  import static int ResetAchievement(const string name);\r\n"
+            "  ///" << clientName << ": Sets the value of an INT stat\r\n"
+            "  import static int SetIntStat(const string name, int value);\r\n"
+            "  ///" << clientName << ": Sets the value of a FLOAT stat\r\n"
+            "  import static int SetFloatStat(const string name, float value);\r\n"
+            "  ///" << clientName << ": Updates an average rate stat\r\n"
+            "  import static int UpdateAverageRateStat(const string name, float countThisSession, float sessionLength);\r\n"
+            "  ///" << clientName << ": Returns the value of an INT stat\r\n"
+            "  import static int GetIntStat(const string name);\r\n"
+            "  ///" << clientName << ": Returns the value of a FLOAT stat\r\n"
+            "  import static float GetFloatStat(const string name);\r\n"
+            "  ///" << clientName << ": Returns the value of an average rate stat\r\n"
+            "  import static float GetAverageRateStat(const string name);\r\n"
+            "  ///" << clientName << ": Resets all stats and achievements\r\n"
+            "  import static void ResetStatsAndAchievements();\r\n"
+            "  ///" << clientName << ": Returns whether the client is loaded and the user logged in\r\n"
+            "  readonly import static attribute int Initialized;\r\n"
+            "  ///" << clientName << ": Returns the name of the current leaderboard (call FindLeaderboard first)\r\n"
+            "  readonly import static attribute String CurrentLeaderboardName;\r\n"
+            "  ///" << clientName << ": Requests to load the specified leaderboard. This call is asynchronous and does not return the data immediately, check for results in repeatedly_execute\r\n"
+            "  import static void RequestLeaderboard(const string leaderboardName, " << clientName << "ScoresRequestType, int limit=10);\r\n"
+            "  ///" << clientName << ": Uploads the score to the current leaderboard (call RequestLeaderboard first). Returns false if an error occurs\r\n"
+            "  import static int UploadScore(int score);\r\n"
+            "  ///" << clientName << ": Returns the name associated with a leaderboard rank (call RequestLeaderboard first)\r\n"
+            "  readonly import static attribute String LeaderboardNames[];\r\n"
+            "  ///" << clientName << ": Returns a leader's score from the current leaderboard (call RequestLeaderboard first)\r\n"
+            "  readonly import static attribute int LeaderboardScores[];\r\n"
+            "  ///" << clientName << ": Returns the number of leaders in the current leaderboard (if any) (call RequestLeaderboard first)\r\n"
+            "  readonly import static attribute int LeaderboardCount;\r\n"
+            "  ///" << clientName << ": Returns the username from the client\r\n"
+            "  import static String GetUserName();\r\n"
+            "  ///" << clientName << ": Returns the current game language from the client\r\n"
+            "  import static String GetCurrentGameLanguage();\r\n"
 			<< this->GetExtraFunctionsForScriptHeader() <<
 			"};\r\n"
 			"\r\n";
@@ -189,6 +191,7 @@ void IAGS2Client::RegisterScriptFunctions(IAGSEngine *engine) const noexcept
 	functions[clientName + "::geti_LeaderboardScores"] = reinterpret_cast<void*>(ClientLeaderboards_GetLeaderScore);
 	functions[clientName + "::get_LeaderboardCount"] = reinterpret_cast<void*>(ClientLeaderboards_GetLeaderCount);
 	functions[clientName + "::GetUserName^0"] = reinterpret_cast<void*>(AGS2Client_GetUserName);
+    functions[clientName + "::GetCurrentGameLanguage^0"] = reinterpret_cast<void*>(AGS2Client_GetCurrentGameLanguage);
 	for (functions_iterator it = functions.begin(); it != functions.end(); ++it)
 	{
 		engine->RegisterScriptFunction(it->first.c_str(), it->second);
@@ -216,4 +219,10 @@ namespace AGS2Client
 		char const *userName = GetClient()->GetUserName();
 		return (userName == nullptr ? nullptr : GetAGSEngine()->CreateScriptString(userName));
 	}
+
+    char const* AGS2Client_GetCurrentGameLanguage()
+    {
+        char const *gameLanguage = GetClient()->GetCurrentGameLanguage();
+        return (gameLanguage == nullptr ? nullptr : GetAGSEngine()->CreateScriptString(gameLanguage));
+    }
 }
