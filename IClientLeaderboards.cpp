@@ -24,7 +24,11 @@
 #include "IClientLeaderboards.h"
 using namespace AGS2Client;
 
+#ifdef NDEBUG
 IAGSEngine* GetAGSEngine();
+#else
+extern IAGSEngine* GetAGSEngine(IAGSEngine *lpEngine = nullptr);
+#endif // NDEBUG
 
 IClientLeaderboards::~IClientLeaderboards() noexcept
 {

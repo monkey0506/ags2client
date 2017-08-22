@@ -98,15 +98,60 @@ void AGS_EditorLoadGame(char *buffer, int bufsize)
 
 // ****** RUN TIME ********
 
+#ifdef NDEBUG
 IAGSEngine *engine;
 
 IAGSEngine* GetAGSEngine()
 {
     return engine;
 }
+#else
+#include <fstream>
+
+#ifdef THIS_IS_THE_EXE
+#include <iostream>
+#endif // THIS_IS_THE_EXE
+
+void println()
+{
+#ifdef THIS_IS_THE_EXE
+    std::cout << std::endl;
+#endif // THIS_IS_THE_EXE
+}
+
+template<typename T, typename ...Args>
+void println(T &&t, Args &&...args)
+{
+#ifdef THIS_IS_THE_EXE
+    std::cout << t;
+    println(std::forward<Args>(args)...);
+#endif // THIS_IS_THE_EXE
+}
+
+IAGSEngine* GetAGSEngine(IAGSEngine *lpEngine = nullptr)
+{
+    static std::ofstream ofstream{ "agsteam_debug.log", std::ios::app };
+    static IAGSEngine *engine = nullptr;
+    if (ofstream.is_open())
+    {
+        ofstream << "Setting engine for first time to '0x" << lpEngine << "'" << std::endl;
+        ofstream.flush();
+        ofstream.close();
+    }
+    else if (lpEngine != nullptr) // print message if changing engine
+    {
+        ofstream.open("agsteam_debug.log", std::ios::app);
+        ofstream << "Changing engine from '0x" << engine << "' to '0x" << lpEngine << "'" << std::endl;
+        ofstream.flush();
+        ofstream.close();
+    }
+    return lpEngine != nullptr ? engine = lpEngine : engine;
+}
+#endif // NDEBUG
 
 void AGS_EngineStartup(IAGSEngine *lpEngine)
 {
+#ifdef NDEBUG
     engine = lpEngine;
 
     if (engine->version < 17)
@@ -119,7 +164,56 @@ void AGS_EngineStartup(IAGSEngine *lpEngine)
 
     engine->RequestEventHook(AGSE_FINALSCREENDRAW);
     engine->RequestEventHook(AGSE_KEYPRESS);
+
+#else
+    static std::ofstream ofstream{ "agsteam_debug.log", std::ios::trunc };
+    println("ofstream.is_open()? ", std::boolalpha, ofstream.is_open());
+    if (ofstream.is_open())
+    {
+        println("writing to debug log...");
+        ofstream << "AGS_EngineStartup called, engine = '0x" << static_cast<IAGSEngine*>(nullptr) << "' (not yet initialized) and lpEngine = '0x" << lpEngine << "'" << std::endl;
+        ofstream.flush();
+        ofstream.close();
+        println("finished writing to debug log");
+    }
+#ifdef THIS_IS_THE_EXE
+    println("Calling AGSteam::Startup()");
+    AGS2Client::GetClient()->Startup();
+    println("AGSteam::Startup complete, calling AGSteam::Shutdown()");
+    AGS2Client::GetClient()->Shutdown();
+    println("AGSteam::Shutdown complete, exiting AGS_EngineStartup");
+    return;
+#endif // THIS_IS_THE_EXE
+
+    if (lpEngine->version < 17)
+    {
+        lpEngine->AbortGame("Engine interface is too old, need newer version of AGS.");
+    }
+
+    ofstream.open("agsteam_debug.log", std::ios::app);
+    ofstream << "Setting engine to '0x" << lpEngine << "'" << std::endl;
+    ofstream.flush();
+    ofstream.close();
+
+    GetAGSEngine(lpEngine);
+
+    AGS2Client::GetClient()->Startup();
+    AGS2Client::GetClient()->RegisterScriptFunctions(lpEngine);
+
+    lpEngine->RequestEventHook(AGSE_FINALSCREENDRAW);
+    lpEngine->RequestEventHook(AGSE_KEYPRESS);
+#endif // NDEBUG
 }
+
+#if !defined(NDEBUG) && defined(THIS_IS_THE_EXE)
+int main(int, char**)
+{
+    std::cout << std::endl << "calling engine startup" << std::endl;
+    AGS_EngineStartup(nullptr);
+    std::cout << "done!" << std::endl;
+    return 0;
+}
+#endif // NDEBUG
 
 void AGS_EngineShutdown()
 {
@@ -136,7 +230,7 @@ int AGS_EngineOnEvent(int event, int data)
     }
     else if (event == AGSE_KEYPRESS)
     {
-        return AGS2Client::GetClient()->ClaimKeyPress(data, reinterpret_cast<int(*)(int)>(engine->GetScriptFunctionAddress("IsKeyPressed")));
+        return AGS2Client::GetClient()->ClaimKeyPress(data, reinterpret_cast<int(*)(int)>(GetAGSEngine()->GetScriptFunctionAddress("IsKeyPressed")));
     }
     return 0;
 }

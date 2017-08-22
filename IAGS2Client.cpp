@@ -46,7 +46,11 @@ using namespace AGS2Client;
 float constexpr const IAGS2Client::VERSION = 2.0f;
 #endif // C++11
 
+#ifdef NDEBUG
 IAGSEngine *GetAGSEngine();
+#else
+extern IAGSEngine* GetAGSEngine(IAGSEngine *lpEngine = nullptr);
+#endif // NDEBUG
 
 bool StripPluginName_IsInvalidChar(char c)
 {
