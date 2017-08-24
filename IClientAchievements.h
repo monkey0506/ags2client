@@ -36,10 +36,10 @@ namespace AGS2Client
         virtual ~IClientAchievements() = 0;
     }; // class IClientAchievements
 
-    IClientAchievements* GetClientAchievements() noexcept;
-    int ClientAchievements_ResetAchievement(char const *name) noexcept;
-    int ClientAchievements_IsAchievementAchieved(char const *name) noexcept;
-    int ClientAchievements_SetAchievementAchieved(char const *name) noexcept;
+    extern "C" __declspec(dllexport) IClientAchievements* GetClientAchievements() noexcept;
+    extern "C" __declspec(dllexport) int ClientAchievements_ResetAchievement(char const *name) noexcept;
+    extern "C" __declspec(dllexport) int ClientAchievements_IsAchievementAchieved(char const *name) noexcept;
+    extern "C" __declspec(dllexport) int ClientAchievements_SetAchievementAchieved(char const *name) noexcept;
 } // namespace AGS2Client
 
 #endif // AGS2CLIENT_ICLIENTACHIEVEMENTS_H

@@ -37,7 +37,7 @@
 
 #ifdef WINDOWS_VERSION
 
-BOOL APIENTRY DllMain(HANDLE, DWORD, LPVOID)
+extern "C" __declspec(dllexport) BOOL APIENTRY DllMain(HANDLE, DWORD, LPVOID)
 {
     // this is the WINDOWS entry point into the DLL
     return TRUE;
@@ -100,7 +100,7 @@ void AGS_EditorLoadGame(char *buffer, int bufsize)
 
 IAGSEngine *engine;
 
-IAGSEngine* GetAGSEngine()
+extern "C" IAGSEngine* GetAGSEngine()
 {
     return engine;
 }

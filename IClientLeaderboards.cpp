@@ -24,7 +24,7 @@
 #include "IClientLeaderboards.h"
 using namespace AGS2Client;
 
-IAGSEngine* GetAGSEngine();
+extern "C" IAGSEngine* GetAGSEngine();
 
 IClientLeaderboards::~IClientLeaderboards() noexcept
 {

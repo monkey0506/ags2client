@@ -46,14 +46,14 @@ using namespace AGS2Client;
 float constexpr const IAGS2Client::VERSION = 2.0f;
 #endif // C++11
 
-IAGSEngine *GetAGSEngine();
+extern "C" IAGSEngine* GetAGSEngine();
 
-bool StripPluginName_IsInvalidChar(char c)
+extern "C" bool StripPluginName_IsInvalidChar(char c)
 {
 	return (((c < 48) || (c > 57)) && ((c < 65) || (c > 90)) && (c != 95) && ((c < 97) || (c > 122)));
 }
 
-char const* IAGS2Client_GetPluginNameStripped() noexcept
+extern "C" char const* IAGS2Client_GetPluginNameStripped() noexcept
 {
 	static std::string pluginName;
 	if (pluginName.empty())

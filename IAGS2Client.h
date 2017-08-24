@@ -55,11 +55,11 @@ namespace AGS2Client
         virtual ~IAGS2Client() = 0;
     };
 
-    IAGS2Client* GetClient() noexcept;
-    int AGS2Client_IsInitialized() noexcept;
-    void AGS2Client_ResetStatsAndAchievements() noexcept;
-    char const* AGS2Client_GetUserName() noexcept;
-    char const* AGS2Client_GetCurrentGameLanguage();
+    extern "C" __declspec(dllexport) IAGS2Client* GetClient() noexcept;
+    extern "C" __declspec(dllexport) int AGS2Client_IsInitialized() noexcept;
+    extern "C" __declspec(dllexport) void AGS2Client_ResetStatsAndAchievements() noexcept;
+    extern "C" __declspec(dllexport) char const* AGS2Client_GetUserName() noexcept;
+    extern "C" __declspec(dllexport) char const* AGS2Client_GetCurrentGameLanguage();
 } // namespace AGS2Client
 
 #endif // AGS2CLIENT_IAGS2CLIENT_H
