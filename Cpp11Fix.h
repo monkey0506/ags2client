@@ -36,6 +36,8 @@
 #define noexcept
 #define nullptr 0
 #define STD_INT32_T int
+#define DEFAULT_CTOR(x) inline x() noexcept {}
+#define DEFAULT_DTOR(x) inline ~x() noexcept {}
 
 #ifndef _MSC_VER
 #undef TR1INCLUDE
@@ -50,6 +52,8 @@ namespace stdtr1compat = std::tr1;
 #include <cstdint>
 
 #define STD_INT32_T std::int32_t
+#define DEFAULT_CTOR(x) x() noexcept = default
+#define DEFAULT_DTOR(x) ~x() noexcept = default
 
 namespace stdtr1compat = std;
 
