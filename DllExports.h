@@ -27,7 +27,7 @@
 #define AGS2CLIENT_EXPORT extern "C" __declspec(dllexport)
 #else // not Windows (Linux/Mac OS)
 // compile with -fvisibility=hidden on Mac
-#define AGS2CLIENT_EXPORT extern "C" __atribute__((visibility("default")))
+#define AGS2CLIENT_EXPORT extern "C" __attribute__((visibility("default")))
 #endif // WINDOWS_VERSION
 
 #endif // AGS2CLIENT_DLLEXPORTS_H
