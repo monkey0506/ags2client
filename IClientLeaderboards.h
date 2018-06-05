@@ -47,7 +47,7 @@ namespace AGS2Client
         virtual char const* GetLeaderName(int index) const = 0;
         virtual int GetLeaderScore(int index) const = 0;
         virtual int GetLeaderCount() const = 0;
-        virtual ~IClientLeaderboards() = 0;
+        virtual ~IClientLeaderboards() noexcept = 0;
     };
 
     AGS2CLIENT_EXPORT IClientLeaderboards* GetClientLeaderboards() noexcept;

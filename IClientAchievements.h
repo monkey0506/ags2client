@@ -34,7 +34,7 @@ namespace AGS2Client
         virtual bool ResetAchievement(char const *name) const = 0; // clears/resets an achievement
         virtual bool IsAchievementAchieved(char const *name) const = 0; // checks an achievement
         virtual bool SetAchievementAchieved(char const *name) const = 0; // sets an achievement
-        virtual ~IClientAchievements() = 0;
+        virtual ~IClientAchievements() noexcept = 0;
     }; // class IClientAchievements
 
     AGS2CLIENT_EXPORT IClientAchievements* GetClientAchievements() noexcept;

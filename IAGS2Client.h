@@ -53,7 +53,7 @@ namespace AGS2Client
 		virtual float GetVersion() const = 0;
         virtual bool ClaimKeyPress(int data, int(*IsKeyPressed)(int)) const = 0;
         virtual void RegisterScriptFunctions(IAGSEngine *engine) const noexcept;
-        virtual ~IAGS2Client() = 0;
+        virtual ~IAGS2Client() noexcept = 0;
     };
 
     AGS2CLIENT_EXPORT IAGS2Client* GetClient() noexcept;

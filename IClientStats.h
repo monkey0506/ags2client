@@ -47,7 +47,7 @@ namespace AGS2Client
         virtual bool SetIntStat(char const *name, int value) const = 0;
         virtual bool SetFloatStat(char const *name, float value) const = 0;
         virtual bool UpdateAverageRateStat(char const *name, float countThisSession, float sessionLength) const = 0;
-        virtual ~IClientStats() = 0;
+        virtual ~IClientStats() noexcept = 0;
     }; // class IClientStats
 
     AGS2CLIENT_EXPORT IClientStats* GetClientStats() noexcept;
