@@ -24,6 +24,7 @@
 #define AGS2CLIENT_ICLIENTSTATS_H
 
 #include "AGSFloatFix.h"
+#include "DllExports.h"
 
 namespace AGS2Client
 {
@@ -49,13 +50,13 @@ namespace AGS2Client
         virtual ~IClientStats() = 0;
     }; // class IClientStats
 
-    extern "C" __declspec(dllexport) IClientStats* GetClientStats() noexcept;
-    extern "C" __declspec(dllexport) int ClientStats_GetIntStat(char const *name) noexcept;
-    extern "C" __declspec(dllexport) AGS::float_t ClientStats_GetFloatStat(char const *name) noexcept;
-    extern "C" __declspec(dllexport) AGS::float_t ClientStats_GetAverageRateStat(char const *name) noexcept;
-    extern "C" __declspec(dllexport) int ClientStats_SetIntStat(char const *name, int value) noexcept;
-    extern "C" __declspec(dllexport) int ClientStats_SetFloatStat(char const *name, AGS::float_t value) noexcept;
-    extern "C" __declspec(dllexport) int ClientStats_UpdateAverageRateStat(char const *name, AGS::float_t countThisSession, AGS::float_t sessionLength) noexcept;
+    AGS2CLIENT_EXPORT IClientStats* GetClientStats() noexcept;
+    AGS2CLIENT_EXPORT int ClientStats_GetIntStat(char const *name) noexcept;
+    AGS2CLIENT_EXPORT AGS::float_t ClientStats_GetFloatStat(char const *name) noexcept;
+    AGS2CLIENT_EXPORT AGS::float_t ClientStats_GetAverageRateStat(char const *name) noexcept;
+    AGS2CLIENT_EXPORT int ClientStats_SetIntStat(char const *name, int value) noexcept;
+    AGS2CLIENT_EXPORT int ClientStats_SetFloatStat(char const *name, AGS::float_t value) noexcept;
+    AGS2CLIENT_EXPORT int ClientStats_UpdateAverageRateStat(char const *name, AGS::float_t countThisSession, AGS::float_t sessionLength) noexcept;
 } // namespace AGS2Client
 
 #endif // AGS2CLIENT_ICLIENTSTATS_H

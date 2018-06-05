@@ -32,12 +32,13 @@
 #define THIS_IS_THE_PLUGIN
 #include "agsplugin.h"
 #include "IAGS2Client.h"
+#include "DllExports.h"
 
 // ***** DESIGN TIME CALLS *******
 
 #ifdef WINDOWS_VERSION
 
-extern "C" __declspec(dllexport) BOOL APIENTRY DllMain(HANDLE, DWORD, LPVOID)
+AGS2CLIENT_EXPORT BOOL APIENTRY DllMain(HANDLE, DWORD, LPVOID)
 {
     // this is the WINDOWS entry point into the DLL
     return TRUE;

@@ -24,6 +24,7 @@
 #define AGS2CLIENT_ICLIENTLEADERBOARDS_H
 
 #include "Cpp11Fix.h"
+#include "DllExports.h"
 
 namespace AGS2Client
 {
@@ -49,13 +50,13 @@ namespace AGS2Client
         virtual ~IClientLeaderboards() = 0;
     };
 
-    extern "C" __declspec(dllexport) IClientLeaderboards* GetClientLeaderboards() noexcept;
-    extern "C" __declspec(dllexport) void ClientLeaderboards_RequestLeaderboard(char const *leaderboardName, int type, int limit) noexcept;
-    extern "C" __declspec(dllexport) int ClientLeaderboards_UploadScore(int score) noexcept;
-    extern "C" __declspec(dllexport) char const* ClientLeaderboards_GetCurrentLeaderboardName() noexcept;
-    extern "C" __declspec(dllexport) char const* ClientLeaderboards_GetLeaderName(int index) noexcept;
-    extern "C" __declspec(dllexport) int ClientLeaderboards_GetLeaderScore(int index) noexcept;
-    extern "C" __declspec(dllexport) int ClientLeaderboards_GetLeaderCount() noexcept;
+    AGS2CLIENT_EXPORT IClientLeaderboards* GetClientLeaderboards() noexcept;
+    AGS2CLIENT_EXPORT void ClientLeaderboards_RequestLeaderboard(char const *leaderboardName, int type, int limit) noexcept;
+    AGS2CLIENT_EXPORT int ClientLeaderboards_UploadScore(int score) noexcept;
+    AGS2CLIENT_EXPORT char const* ClientLeaderboards_GetCurrentLeaderboardName() noexcept;
+    AGS2CLIENT_EXPORT char const* ClientLeaderboards_GetLeaderName(int index) noexcept;
+    AGS2CLIENT_EXPORT int ClientLeaderboards_GetLeaderScore(int index) noexcept;
+    AGS2CLIENT_EXPORT int ClientLeaderboards_GetLeaderCount() noexcept;
 } // namespace AGS2Client
 
 #endif // AGS2CLIENT_ICLIENTLEADERBOARDS_H

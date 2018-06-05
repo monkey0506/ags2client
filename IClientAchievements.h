@@ -24,6 +24,7 @@
 #define AGS2CLIENT_ICLIENTACHIEVEMENTS_H
 
 #include "Cpp11Fix.h"
+#include "DllExports.h"
 
 namespace AGS2Client
 {
@@ -36,10 +37,10 @@ namespace AGS2Client
         virtual ~IClientAchievements() = 0;
     }; // class IClientAchievements
 
-    extern "C" __declspec(dllexport) IClientAchievements* GetClientAchievements() noexcept;
-    extern "C" __declspec(dllexport) int ClientAchievements_ResetAchievement(char const *name) noexcept;
-    extern "C" __declspec(dllexport) int ClientAchievements_IsAchievementAchieved(char const *name) noexcept;
-    extern "C" __declspec(dllexport) int ClientAchievements_SetAchievementAchieved(char const *name) noexcept;
+    AGS2CLIENT_EXPORT IClientAchievements* GetClientAchievements() noexcept;
+    AGS2CLIENT_EXPORT int ClientAchievements_ResetAchievement(char const *name) noexcept;
+    AGS2CLIENT_EXPORT int ClientAchievements_IsAchievementAchieved(char const *name) noexcept;
+    AGS2CLIENT_EXPORT int ClientAchievements_SetAchievementAchieved(char const *name) noexcept;
 } // namespace AGS2Client
 
 #endif // AGS2CLIENT_ICLIENTACHIEVEMENTS_H
